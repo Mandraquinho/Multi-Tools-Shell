@@ -174,7 +174,19 @@ function Assistente-Diagnostico {
         '2' { sfc /scannow; Pause; Assistente-Diagnostico }
         '3' { mdsched; Pause; Assistente-Diagnostico }
         '4' { DISM /Online /Cleanup-Image /ScanHealth; Pause; Assistente-Diagnostico }
-        '5' { defrag C:; Pause; Assistente-Diagnostico }
+        '5' {
+            $ssd = $false
+            try {
+                $mediaType = (Get-PhysicalDisk | Where-Object { $_.DeviceID -eq ((Get-Partition -DriveLetter C).DiskNumber) }).MediaType
+                if ($mediaType -eq 'SSD') { $ssd = $true }
+            } catch {}
+            if ($ssd) {
+                Write-Host "`nATENÇÃO: O disco C: é um SSD. Não é recomendado desfragmentar SSDs!" -ForegroundColor Red
+            } else {
+                defrag C:
+            }
+            Pause; Assistente-Diagnostico
+        }
         '6' { winsat disk; Pause; Assistente-Diagnostico }
         '7' { powercfg /energy; Write-Host "Relatório gerado em C:\Windows\System32\energy-report.html"; Pause; Assistente-Diagnostico }
         '8' { Get-EventLog -LogName Application -Newest 10 | Format-Table TimeGenerated, EntryType, Source, Message -AutoSize; Pause; Assistente-Diagnostico }
