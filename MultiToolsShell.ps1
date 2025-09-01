@@ -220,7 +220,9 @@ while ($true) {
     Show-SystemStatus
     Show-Menu
     $choice = Read-Host
-    switch ($choice.ToUpper()) {
+    $choice = $choice.Trim().ToUpper()
+    if ($choice -eq 'X') { break }
+    switch ($choice) {
         'R' { Rede-Conectividade }
         'S' { Sistema-Hardware }
         'U' { Usuarios-Seguranca }
@@ -228,7 +230,6 @@ while ($true) {
         'O' { Otimizacao-Performance }
         'A' { Assistente-Diagnostico }
         'H' { Show-Help }
-        'X' { break }
         default { Write-Host "Opção inválida!"; Start-Sleep 2 }
     }
 }
