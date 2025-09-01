@@ -1,114 +1,134 @@
 # Multi Tools Shell
 
 🇧🇷 **Descrição (PT-BR)**  
-O **Multi Tools Shell** é uma ferramenta em **PowerShell** desenvolvida para simplificar e acelerar o diagnóstico e a manutenção de sistemas **Windows**.  
-Com uma interface de linha de comando prática e centralizada, reúne funcionalidades essenciais para técnicos e usuários avançados, tornando o gerenciamento do sistema mais ágil e objetivo.  
+O **Multi Tools Shell** é uma ferramenta em **PowerShell** para diagnóstico, manutenção e suporte em sistemas **Windows**. Com interface de linha de comando centralizada, reúne funções essenciais para técnicos e usuários avançados, tornando o gerenciamento do sistema mais ágil e objetivo.
 
-A versão **2.0** traz melhorias de estabilidade e diversas funções integradas diretamente em seus módulos, mantendo o menu organizado e funcional.  
-
----
-
-## ⚙️ Recursos principais
-
-### 🔗 Análise de Rede
-- Exibe endereços IP local e público.  
-- Mostra geolocalização do IP público (cidade, região e país).  
-- Executa testes de conectividade (ping, tracert, DNS).  
-- Redefine configurações de TCP/IP.  
-- **Novo (2.0):** Acesso rápido às ferramentas de rede do Windows (`ncpa.cpl` e configurações avançadas).  
-
-### 💻 Informações de Sistema e Hardware
-- Detalhes do sistema operacional e do processador.  
-- Uso de memória RAM e espaço em disco.  
-- Informações de drivers e dispositivos conectados.  
-- **Novo (2.0):** Atalho para **Gerenciamento de Disco** e **Gerenciador de Dispositivos**.  
-
-### 🔐 Segurança e Usuários
-- Lista usuários locais e seus status.  
-- Verifica atualizações do sistema.  
-- Gerencia contas locais (habilitar/desabilitar).  
-- **Novo (2.0):** Acesso ao **Editor de Registro**.  
-- **Novo (2.0):** Atalho para **Gerenciamento de Serviços**.  
-
-### 📊 Monitoramento
-- Exibe eventos recentes do sistema.  
-- Monitora desempenho de processos em tempo real.  
-- Gera relatórios de consumo de CPU, RAM e disco.  
-- **Novo (2.0):** Exporta logs de desempenho para análise posterior.  
-
-### 🚀 Otimização de Desempenho
-- Limpa arquivos temporários e cache.  
-- Limpa diretórios de sistema (TEMP, Prefetch).  
-- Executa verificação de integridade do sistema (SFC/DISM).  
-- **Novo (2.0):** Atalho para o **Liberador de Espaço em Disco**.  
-
-### 🛠️ Ferramentas de Suporte
-- Executa diagnósticos detalhados de hardware.  
-- Gera relatórios em HTML para análise.  
-- Coleta informações para suporte remoto.  
-- **Novo (2.0):** Backup rápido de pastas selecionadas.  
-- **Novo (2.0):** Atualização automática – busca e instala a versão mais recente no GitHub.  
+A versão **2.0** traz melhorias de estabilidade, novas funções e um menu ainda mais organizado.
 
 ---
 
-## 🖥️ Tecnologias utilizadas
-- **PowerShell 5.1+**  
-- **Windows 10/11 ou Windows Server 2016+**  
+## ⚙️ Funcionalidades por Módulo
+
+### 🟢 Menu Principal
+
+- **R** → Rede e Conectividade
+- **S** → Sistema e Hardware
+- **U** → Usuários e Segurança
+- **M** → Monitoramento e Logs
+- **O** → Otimização e Performance
+- **A** → Assistente de Diagnóstico
+- **H** → Ajuda e Documentação
+- **X** → Sair
 
 ---
 
-## 🎯 Objetivos futuros
-- Adição de suporte para **novos módulos personalizados**.  
-- Melhorias no **relatório em HTML** com interface interativa.  
-- Suporte a execução simplificada via **instalador automatizado**.  
+### 🔗 Rede e Conectividade
+
+- Mostrar configuração IP (ipconfig /all)
+- Testar conectividade (ping google.com)
+- Rastrear rota (tracert google.com)
+- Redefinir TCP/IP (netsh int ip reset)
+- Redefinir Winsock (netsh winsock reset)
+- Limpar cache DNS (ipconfig /flushdns)
+- Listar adaptadores de rede
+
+### 💻 Sistema e Hardware
+
+- Exibe SO, versão, processador
+- Mostra memória total e espaço livre em disco
+
+### 🔐 Usuários e Segurança
+
+- Lista usuários locais, status e último logon
+
+### 📊 Monitoramento e Logs
+
+- Exibe os 10 eventos mais recentes do log do sistema
+
+### 🚀 Otimização e Performance
+
+- Limpa arquivos temporários (TEMP, Prefetch)
+- Limpa cache do navegador (Chrome/Edge)
+- Lista programas na inicialização
+
+### 🛠️ Assistente de Diagnóstico
+
+- Verificar disco (CHKDSK)
+- Verificar arquivos do sistema (SFC)
+- Diagnóstico de memória (mdsched)
+- Verificar integridade da imagem (DISM)
+- Otimizar disco:
+  - **Se SSD:** executa TRIM (Optimize-Volume)
+  - **Se HDD:** executa desfragmentação (defrag)
+  - ⚠️ **Atenção:** Desfragmentação não é realizada em SSDs, protegendo a vida útil do dispositivo.
+- Testar velocidade do disco (WinSAT)
+- Gerar relatório de energia (powercfg /energy)
+- Exibir logs de aplicativos
+- Verificar status da licença do Windows
+
+### 🆘 Ajuda e Documentação
+
+- Orientações de uso do menu e atalhos
 
 ---
 
-## 🚀 Instalação
+## 📦 Recursos Adicionais
 
-1. Clone este repositório:  
+- Exibe IP local e público, com geolocalização
+- Mostra status do sistema (RAM livre, disco, data/hora)
+- Interface amigável e feedbacks claros
+- Mensagens e alertas em português
+
+---
+
+## 🖥️ Requisitos
+
+- **PowerShell 5.1+**
+- **Windows 10/11 ou Windows Server 2016+**
+
+---
+
+## 🚀 Instalação e Execução
+
+1. Clone este repositório:
+
    ```powershell
    git clone https://github.com/Mandraquinho/Multi-Tools-Shell
    cd Multi-Tools-Shell
    ```
 
-2. Baixe o arquivo `MultiToolsShell.ps1`.  
+2. Baixe o arquivo `MultiToolsShell.ps1`.
 
-3. Abra o **PowerShell como Administrador**.  
+3. Abra o **PowerShell como Administrador**.
 
-4. Navegue até a pasta onde está o script:  
+4. Navegue até a pasta do script:
+
    ```powershell
    cd "C:\caminho\da\pasta"
    ```
 
-5. Execute o script:  
+5. Execute o script:
+
    ```powershell
    PowerShell -ExecutionPolicy Bypass -File "MultiToolsShell.ps1"
    ```
 
 ---
 
-## ▶️ Uso básico
+## ▶️ Uso Básico
 
-Menu de navegação principal:  
-
-- **R** → Rede e Conectividade  
-- **S** → Sistema e Hardware  
-- **U** → Usuários e Segurança  
-- **M** → Monitoramento e Logs  
-- **O** → Otimização  
-- **T** → Ferramentas de Suporte  
-- **H** → Ajuda  
-- **X** → Sair  
+- Navegue pelo menu digitando a letra correspondente à categoria desejada.
+- Siga as instruções exibidas em cada módulo.
+- Pressione **Enter** para continuar após cada operação.
 
 ---
 
 ## 📌 Contribuição
+
 Contribuições são bem-vindas!  
-Abra **issues** ou envie **pull requests** com melhorias ou correções.  
+Abra **issues** ou envie **pull requests** com melhorias ou correções.
 
 ---
 
 **Desenvolvido por Douglas Furlan**  
-🔗 [LinkedIn](https://www.linkedin.com/in/douglasfurlans)  
-
+🔗 [LinkedIn](https://www.linkedin.com/in/douglasfurlans)

@@ -162,7 +162,7 @@ function Assistente-Diagnostico {
     Write-Host "2. Verificar Arquivos do Sistema (SFC)"
     Write-Host "3. Diagnóstico de Memória"
     Write-Host "4. Verificar Integridade da Imagem (DISM)"
-    Write-Host "5. Desfragmentar Disco"
+    Write-Host "5. Otimizar Disco (Desfragmentar/Trim)"
     Write-Host "6. Testar Velocidade do Disco (WinSAT)"
     Write-Host "7. Relatório de Energia"
     Write-Host "8. Logs de Aplicativos"
@@ -174,7 +174,22 @@ function Assistente-Diagnostico {
         '2' { sfc /scannow; Pause; Assistente-Diagnostico }
         '3' { mdsched; Pause; Assistente-Diagnostico }
         '4' { DISM /Online /Cleanup-Image /ScanHealth; Pause; Assistente-Diagnostico }
-        '5' { defrag C:; Pause; Assistente-Diagnostico }
+        '5' {
+            $ssd = $false
+            try {
+                $diskNumber = (Get-Partition -DriveLetter C).DiskNumber
+                $mediaType = (Get-PhysicalDisk | Where-Object { $_.DeviceID -eq $diskNumber }).MediaType
+                if ($mediaType -eq 'SSD') { $ssd = $true }
+            } catch {}
+            if ($ssd) {
+                Write-Host "`nO disco C: é um SSD. Executando TRIM (Optimize-Volume)..." -ForegroundColor Cyan
+                Optimize-Volume -DriveLetter C -ReTrim -Verbose
+            } else {
+                Write-Host "`nExecutando desfragmentação..." -ForegroundColor Yellow
+                defrag C:
+            }
+            Pause; Assistente-Diagnostico
+        }
         '6' { winsat disk; Pause; Assistente-Diagnostico }
         '7' { powercfg /energy; Write-Host "Relatório gerado em C:\Windows\System32\energy-report.html"; Pause; Assistente-Diagnostico }
         '8' { Get-EventLog -LogName Application -Newest 10 | Format-Table TimeGenerated, EntryType, Source, Message -AutoSize; Pause; Assistente-Diagnostico }
@@ -205,7 +220,9 @@ while ($true) {
     Show-SystemStatus
     Show-Menu
     $choice = Read-Host
-    switch ($choice.ToUpper()) {
+    $choice = $choice.Trim().ToUpper()
+    if ($choice -eq 'X') { break }
+    switch ($choice) {
         'R' { Rede-Conectividade }
         'S' { Sistema-Hardware }
         'U' { Usuarios-Seguranca }
@@ -213,7 +230,6 @@ while ($true) {
         'O' { Otimizacao-Performance }
         'A' { Assistente-Diagnostico }
         'H' { Show-Help }
-        'X' { break }
         default { Write-Host "Opção inválida!"; Start-Sleep 2 }
     }
 }
